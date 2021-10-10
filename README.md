@@ -1,4 +1,5 @@
 # Horse-to-Zebra
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/ade-pyaar/horse-to-zebra/app.py)
 
 This is an app that transforms a horse to a zebra, or a zebra to a horse.
 
