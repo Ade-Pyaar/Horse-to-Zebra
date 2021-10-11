@@ -7,29 +7,28 @@ st.set_page_config(page_title="GAN App",page_icon=":fire")
 
 
 st.sidebar.title('About the App')
-st.sidebar.write("This is an app that transforms a horse to a zebra, or a zebra to a horse.")
-st.sidebar.write("The app consists of two GAN models, one converts picture of a horse to that of a zebra and the other converts picture of a zebra to that of a horse.")
+st.sidebar.write("This is an app that transforms a horse to a zebra.")
+st.sidebar.write("The app is a GAN model that converts picture of a horse to that of a zebra.")
 st.sidebar.write("Creepy, right...?")
-st.sidebar.write("The model is not perfect so there may be some mistakes (The model converting horse to zebra is better than the one converting zebra to horse).")
-st.sidebar.write("And don't upload a picture that is not a horse or that is not a zebra, unless you want to see some weird stuff...")
+st.sidebar.write("The model is not perfect so there may be some mistakes.")
+st.sidebar.write("And don't upload a picture that is not a horse, unless you want to see some weird stuff...")
 
 
 
 
 #start the user interface
-st.title("Horse-Zebra and Zebra-Horse App")
-st.write("Upload an image of either a horse or a zebra.")
-st.write("Choose which model to use and press 'Transform' to change it.")
+st.title("Horse-Zebra App")
+st.write("Upload an image of a horse.")
+st.write("And press 'Transform' to change it.")
 st.write("PS: If on mobile, switch to Desktop mode for better display.")
 
-upload_image = st.file_uploader(label='Select your horse/zebra image...', type=('png', 'jpg', 'jpeg'), key='cimage')
-model_type = st.selectbox("Select model to use...", ["Horse to Zebra", "Zebra to Horse"], key="model")
+upload_image = st.file_uploader(label='Select your horse image...', type=('png', 'jpg', 'jpeg'), key='cimage')
 
 
 if upload_image is not None:
     
     if st.button("Transform", key='transform'):
-        real_image, output = predict(Image.open(upload_image).resize((256,256)), model_type=model_type)
+        real_image, output = predict(Image.open(upload_image).resize((256,256)))
         output = show_tensor_images(torch.cat([real_image, output]), size=(3, 256, 256))
 
         st.image(output)

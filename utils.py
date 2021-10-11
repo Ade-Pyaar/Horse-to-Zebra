@@ -242,26 +242,18 @@ class Generator(nn.Module):
 
 
 
-def load_model(name: str):
-    if name == "h2z":
-        pre_dict = torch.load('horse2zebra.pth', map_location=torch.device(DEVICE))
-        GEN_HZ = Generator(DIM_A, DIM_B).to(DEVICE)
-        GEN_HZ.load_state_dict(pre_dict['gen_AB'])
+def load_model():
+    pre_dict = torch.load('horse2zebra.pth', map_location=torch.device(DEVICE))
+    GEN_HZ = Generator(DIM_A, DIM_B).to(DEVICE)
+    GEN_HZ.load_state_dict(pre_dict['gen_AB'])
 
-        return GEN_HZ
-
-    if name == 'z2h':
-        pre_dict = torch.load('zebra2horse.pth', map_location=torch.device(DEVICE))
-        GEN_ZH = Generator(DIM_A, DIM_B).to(DEVICE)
-        GEN_ZH.load_state_dict(pre_dict['gen_BA'])
-
-        return GEN_ZH
+    return GEN_HZ
 
 
 
 
 
-def predict(upload_image, model_type):
+def predict(upload_image):
     dataset = ImageDataset(upload_image, transform=transform)
     
     dataloader = DataLoader(dataset, batch_size=1, shuffle=True)
@@ -269,10 +261,8 @@ def predict(upload_image, model_type):
         pass
     with torch.no_grad():
         real_image = real_image.to(DEVICE)
-        if model_type == "Horse to Zebra":
-            model = load_model("h2z")
-        else:
-            model = load_model('z2h')
+
+        model = load_model()
 
         output_image = model(real_image)
 
