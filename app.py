@@ -12,15 +12,23 @@ st.sidebar.write("The app is a GAN model that converts picture of a horse to tha
 st.sidebar.write("Creepy, right...?")
 st.sidebar.write("The model is not perfect so there may be some mistakes.")
 st.sidebar.write("And don't upload a picture that is not a horse, unless you want to see some weird stuff...")
+st.sidebar.write("No horse image at the moment, no worries, press the 'Test' button to test the model with a sample picture.")
 
 
 
 
 #start the user interface
 st.title("Horse-Zebra App")
-st.write("Upload an image of a horse.")
-st.write("And press 'Transform' to change it.")
+st.write("Upload an image of a horse, and pres 'Transform' to change it.")
 st.write("PS: If on mobile, switch to Desktop mode for better display.")
+
+st.write("No horse image at the moment, no worries, press the 'Test' button below to test the model with a sample picture")
+if st.button("Test", key='test'):
+        real_image, output = predict(Image.open("demo.jpg").resize((256,256)))
+        output = show_tensor_images(torch.cat([real_image, output]), size=(3, 256, 256))
+
+        st.image(output)
+        st.write("Before and After")
 
 upload_image = st.file_uploader(label='Select your horse image...', type=('png', 'jpg', 'jpeg'), key='cimage')
 
